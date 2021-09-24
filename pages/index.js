@@ -2,19 +2,18 @@ import Head from "next/head";
 import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
 import { getCountryData, getSortedPostsData } from "../lib/posts";
-import { Container } from "react-bootstrap/Container";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Link from "next/dist/client/link";
+
 // import { getCountryData } from "../lib/posts";
 
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData();
 
   const allCapitals = await getCountryData();
-
-  console.log(allCapitals);
-
-  console.log(allPostsData);
 
   return {
     props: { allCapitals },
@@ -27,6 +26,7 @@ export default function Home({ allCapitals }) {
       <Head>
         <title>{siteTitle}</title>
       </Head>
+
       <section className={utilStyles.headingMd}>
         <p>
           Click on one of the countries below to find out more information about
@@ -35,19 +35,19 @@ export default function Home({ allCapitals }) {
       </section>
 
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <ul className={utilStyles.list}>
-          <Container>
-            <Row>
-              <Col>
-                {allCapitals.map(({ name }) => (
-                  <li className={utilStyles.listItem} key={name}>
-                    <button className="button-17">{name}</button>
-                  </li>
-                ))}
+        <Container>
+          <Row lg={3}>
+            {/* <ul className={utilStyles.list}> */}
+            {allCapitals.map(({ name }) => (
+              <Col className="text-center">
+                <Link href={`/countries/${name}`}>
+                  <button className="button-17">{name}</button>
+                </Link>
               </Col>
-            </Row>
-          </Container>
-        </ul>
+            ))}
+            {/* </ul> */}
+          </Row>
+        </Container>
       </section>
       <style jsx>
         {`
@@ -76,6 +76,7 @@ export default function Home({ allCapitals }) {
             letter-spacing: 0.25px;
             line-height: normal;
             max-width: 100%;
+            margin-top: 20px;
             overflow: visible;
             padding: 2px 24px;
             position: relative;
@@ -87,7 +88,7 @@ export default function Home({ allCapitals }) {
             user-select: none;
             -webkit-user-select: none;
             touch-action: manipulation;
-            width: auto;
+            width: 250px;
             will-change: transform, opacity;
             z-index: 0;
           }
