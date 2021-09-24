@@ -1,9 +1,15 @@
 import Layout from "../../components/layout";
 import { getCountryNames, getSpecificCountryData } from "../../lib/posts";
+import Image from "next/dist/client/image";
 
 export default function Post({ countryData }) {
   console.log(countryData);
-  return <Layout>{countryData[0].name}</Layout>;
+  return (
+    <Layout>
+      <h1>{countryData[0].name}</h1>
+      <Image width={300} height={300} src={countryData[0].flags[0]} />
+    </Layout>
+  );
 }
 
 export async function getStaticPaths() {
