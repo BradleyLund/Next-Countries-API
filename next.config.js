@@ -4,4 +4,5 @@ module.exports = {
   images: {
     domains: ["restcountries.com"],
   },
+  target: "serverless",
 };
