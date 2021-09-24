@@ -1,13 +1,14 @@
 import Layout from "../../components/layout";
-import { getCountryNames, getSpecificCountryData } from "../../lib/posts";
+import { getCountryNames, getSpecificCountryData } from "../../lib/countries";
 import Image from "next/dist/client/image";
 import utilStyles from "../../styles/utils.module.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
+// the dynamic routing page that will be created for each country and have a dynamic url
+
 export default function Post({ countryData }) {
-  console.log(countryData);
   return (
     <Layout>
       <Container>
@@ -50,6 +51,7 @@ export default function Post({ countryData }) {
 
 export async function getStaticPaths() {
   // return a list of the possible values for name of the country
+  // so that next can know which pages will be made and with what name i.e. zimbabwe, angola, etc
   const paths = await getCountryNames();
   return {
     paths,
@@ -58,7 +60,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  //fetch neessary data for the blog post using params.id
+  //fetch necessary data for the country page using params.name and we will request to the api specific to the country name
   const countryData = await getSpecificCountryData(params.name);
   return {
     props: {

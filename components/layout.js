@@ -7,21 +7,17 @@ import Link from "next/link";
 const name = "Africa Info";
 export const siteTitle = "Africa Info";
 
+// Layout component that is used in all the pages
+
 export default function Layout({ children, home }) {
   return (
     <div className={styles.container}>
+      {/* the next head section where we can add html meta data and other stuff */}
       <Head>
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="description" />
-        <meta
-          property="og:image"
-          content={`https://og-image.vercel.app/${encodeURI(
-            siteTitle
-          )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.zeit.co%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
-        />
         <meta name="og:title" content={siteTitle} />
-        <meta name="twitter:card" content="summary_large_image" />
       </Head>
+      {/* header component which displays the Africa info logo and the title when on the home page and then the same but smaller and 
+      with a return back to home link if we are not on the home page */}
       <header className={styles.header}>
         {home ? (
           <>

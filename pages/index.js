@@ -1,26 +1,23 @@
 import Head from "next/head";
 import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
-import { getCountryData, getSortedPostsData } from "../lib/posts";
+import { getCountryData, getSortedPostsData } from "../lib/countries";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Link from "next/dist/client/link";
 
-// import { getCountryData } from "../lib/posts";
-
 export async function getStaticProps() {
-  const allPostsData = getSortedPostsData();
-
-  const allCapitals = await getCountryData();
+  // pull in the country data using the function in the lib/countries.js file
+  const countryData = await getCountryData();
 
   return {
-    props: { allCapitals },
+    props: { countryData },
   };
 }
 
-export default function Home({ allCapitals }) {
+export default function Home({ countryData }) {
   return (
     <Layout home>
       <Head>
@@ -37,18 +34,21 @@ export default function Home({ allCapitals }) {
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <Container>
           <Row lg={3}>
-            {/* <ul className={utilStyles.list}> */}
-            {allCapitals.map(({ name }) => (
-              <Col className="text-center">
+            {/* mapping through each of the countries in africa and using next link which will redirect to each countries page  */}
+            {countryData.map(({ name }) => (
+              <Col className="text-center" key={name}>
                 <Link href={`/countries/${name}`}>
                   <button className="button-17">{name}</button>
                 </Link>
               </Col>
             ))}
-            {/* </ul> */}
           </Row>
         </Container>
       </section>
+
+      {/* 
+      found the styling for the button at this website, it is a google style button
+      https://getcssscan.com/css-buttons-examples */}
       <style jsx>
         {`
           p {
